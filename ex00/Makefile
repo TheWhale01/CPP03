@@ -1,10 +1,14 @@
 CC=c++
-CFLAGS=-Wall -Wextra -Werror -std=c++98
-CFILES=main.cpp ClapTrap.cpp
-OBJS=$(patsubst %.cpp, %.o, $(CFILES))
 NAME=claptrap
+OBJ_DIR=obj/
+SRC_DIR=src/
+INCLUDES=includes/
+CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES) -g -std=c++98
+CFILES=$(addprefix $(SRC_DIR), main.cpp ClapTrap.cpp)
+OBJS=$(patsubst $(SRC_DIR)%.cpp, $(OBJ_DIR)%.o, $(CFILES))
 
-%.o: %.cpp
+$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
+	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
@@ -13,11 +17,11 @@ $(NAME): $(OBJS)
 all: $(NAME)
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -rf $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all debug clean fclean re

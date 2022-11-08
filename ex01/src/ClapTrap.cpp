@@ -27,7 +27,10 @@ ClapTrap::~ClapTrap(void)
 
 ClapTrap &ClapTrap::operator=(ClapTrap const &rhs)
 {
-	*this = rhs;
+	this->_attack_damage = rhs._attack_damage;
+	this->_energy_points = rhs._energy_points;
+	this->_hit_points = rhs._hit_points;
+	this->_name = rhs._name;
 	return (*this);
 }
 

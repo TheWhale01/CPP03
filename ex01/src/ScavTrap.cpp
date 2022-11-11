@@ -21,12 +21,16 @@ ScavTrap::ScavTrap(ScavTrap const &to_copy): ClapTrap()
 
 ScavTrap::~ScavTrap(void)
 {
+	if (!this->_hit_points || !this->_energy_points)
+		std::cout << this->_name << " died." << std::endl;
 	std::cout << "ScavTrap destructor called." << std::endl;
 	return ;
 }
 
 ScavTrap &ScavTrap::operator=(ScavTrap const &rhs)
 {
+	if (this == &rhs)
+		return (*this);
 	this->_attack_damage = rhs._attack_damage;
 	this->_energy_points = rhs._energy_points;
 	this->_hit_points = rhs._hit_points;
@@ -44,11 +48,5 @@ void ScavTrap::attack(std::string const &target)
 	if (!this->_hit_points || !this->_energy_points)
 		return ;
 	this->_energy_points--;
-	if (this->_attack_damage >= this->_hit_points)
-		this->_hit_points = 0;
-	else
-		this->_hit_points -= this->_attack_damage;
 	std::cout << "ScavTrap: " << this->_name << " attacks " << target << ", causing " << this->_attack_damage << " points of damage !" << std::endl;
-	if (!this->_hit_points || !this->_energy_points)
-		std::cout << this->_name << " died." << std::endl;
 }

@@ -25,6 +25,8 @@ DiamondTrap::DiamondTrap(std::string const &name): ClapTrap(name + "_clap_name")
 
 DiamondTrap::~DiamondTrap(void)
 {
+	if (!this->_hit_points || !this->_energy_points)
+		std::cout << this->_name << " died." << std::endl;
 	std::cout << "DiamondTrap destructor called." << std::endl;
 	return ;
 }

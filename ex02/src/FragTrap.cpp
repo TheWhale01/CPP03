@@ -21,12 +21,16 @@ FragTrap::FragTrap(std::string const &name): ClapTrap(name)
 
 FragTrap::~FragTrap(void)
 {
+	if (!this->_hit_points || !this->_energy_points)
+		std::cout << this->_name << " died." << std::endl;
 	std::cout << "FragTrap destructor called." << std::endl;
 	return ;
 }
 
 FragTrap &FragTrap::operator=(FragTrap const &rhs)
 {
+	if (this == &rhs)
+		return (*this);
 	this->_attack_damage = rhs._attack_damage;
 	this->_energy_points = rhs._energy_points;
 	this->_hit_points = rhs._hit_points;

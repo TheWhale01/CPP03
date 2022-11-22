@@ -1,14 +1,12 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(void): _hit_points(100), _energy_points(50),
-	_attack_damage(30), _name("default_clap_name")
+ClapTrap::ClapTrap(void): _hit_points(100), _energy_points(50), _attack_damage(20), _name("default")
 {
 	std::cout << "ClapTrap default constructor called." << std::endl;
 	return ;
 }
 
-ClapTrap::ClapTrap(std::string const &name): _hit_points(100),
-	_energy_points(50), _attack_damage(30), _name(name)
+ClapTrap::ClapTrap(std::string const &name): _hit_points(100), _energy_points(50), _attack_damage(20), _name(name)
 {
 	std::cout << "ClapTrap string constructor called." << std::endl;
 	return ;
@@ -43,13 +41,7 @@ void ClapTrap::attack(std::string const &target)
 	if (!this->_hit_points || !this->_energy_points)
 		return ;
 	this->_energy_points--;
-	if (this->_attack_damage >= this->_hit_points)
-		this->_hit_points = 0;
-	else
-		this->_hit_points -= this->_attack_damage;
 	std::cout << this->_name << " attacks " << target << ", causing " << this->_attack_damage << " points of damage !" << std::endl;
-	if (!this->_hit_points || !this->_energy_points)
-		std::cout << this->_name << " died." << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount)
@@ -57,6 +49,10 @@ void ClapTrap::takeDamage(unsigned int amount)
 	if (!this->_hit_points || !this->_energy_points)
 		return ;
 	this->_attack_damage = amount;
+	if (amount > this->_hit_points)
+		amount = this->_hit_points;
+	this->_hit_points -= amount;
+	std::cout << this->_name << " took " << amount << " points of damage !" << std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
@@ -65,6 +61,13 @@ void ClapTrap::beRepaired(unsigned int amount)
 		return ;
 	this->_energy_points--;
 	this->_hit_points += amount;
-	if (!this->_energy_points)
-		std::cout << this->_name << " died." << std::endl;
 }
+
+void ClapTrap::print_info(void) const
+{
+	std::cout << "----------------" << std::endl
+		<< this->_name << " has " << this->_hit_points << " hit points" << std::endl
+		<< this->_energy_points << " energy points" << std::endl
+		<< this->_attack_damage << " attack damage points" << std::endl
+		<< "----------------" << std::endl;
+	}

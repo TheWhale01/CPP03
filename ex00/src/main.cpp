@@ -4,9 +4,12 @@ int main(void)
 {
 	ClapTrap clap("Michel");
 
+	clap.print_info();
+	clap.takeDamage(5);
+	clap.print_info();
+	clap.beRepaired(2);
 	clap.attack("Patrick");
-	for (int i = 0; i < 20; i++)
-		clap.beRepaired(1);
-	clap.attack("Patrick");
+	clap.print_info();
+	clap.takeDamage(100);
 	return (0);
 }
